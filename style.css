@@ -1,0 +1,32 @@
+h1 {
+	text-align: center;
+	color: orange;
+	font-family: "Tulpen One", cursive;
+	font-size: 40px;
+	text-decoration: overline underline;
+}
+p {
+	color: white;
+	font-family: "Tulpen One", cursive;
+	font-size: 30px;
+	width: 70%;
+}
+body {
+	background-color: black;
+}
+.cv {
+	display: flex;
+}
+.footer {
+	display: flex;
+}
+.mail {
+	width: 10%;
+	margin: inherit;
+}
+.header {
+}
+.image {
+	margin-right: 5%;
+	margin-top: 2.5%;
+}
