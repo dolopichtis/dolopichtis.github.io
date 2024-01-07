@@ -41,6 +41,7 @@ h2 {
 ul {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-evenly;
 }
 li {
         position: relative;
