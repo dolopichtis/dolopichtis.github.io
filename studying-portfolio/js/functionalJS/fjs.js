@@ -69,7 +69,7 @@ function makeTwoDB(text) {
                 console.log(stringArray);
                 const newStringArray = stringArray.map((word) => {
                         return Object.keys(db).includes(word) ? 
-                                `${word} have (${db[word].rate} place [the sentence was created by searching a single-word of the entered String in the DB] in the TOP-10 of towns in the Ukraine, its population is ${db[word].population} ${db[word].population % 10 === 1 ? 'ludyna'
+                                `${word} (${db[word].rate} place [the sentence was created by searching a single-word of the entered String in the DB], population is ${db[word].population} ${db[word].population % 10 === 1 ? 'ludyna'
                                                 : db[word].population % 10 < 5 && db[word].population % 10 > 0  ? 'ludyny' 
                                                 : 'ludey'})`
                                 : word;
@@ -80,7 +80,7 @@ function makeTwoDB(text) {
 
                 Object.keys(db2w).map( 
                         (city) => {
-                                newString = newString.replaceAll(city, `${city} (${db2w[city].rate} place [the sentence was created by searching a more-than-one-word key of the DB in the entered String] in the TOP-10 of towns in the Ukraine, its population is ${db2w[city].population} ${db2w[city].population % 10 === 1 ? 'ludyna' : db2w[city].population % 10 < 5 && db2w[city].population % 10 > 0  ? 'ludyny' : 'ludey'})`)
+                                newString = newString.replaceAll(city, `${city} (${db2w[city].rate} place [the sentence was created by searching a more-than-one-word key of the DB in the entered String], its population is ${db2w[city].population} ${db2w[city].population % 10 === 1 ? 'ludyna' : db2w[city].population % 10 < 5 && db2w[city].population % 10 > 0  ? 'ludyny' : 'ludey'})`)
                         });
                 return newString;
         }
