@@ -6,6 +6,8 @@ dbGraber.addEventListener('change', (event) => {db = makeDB(event.currentTarget.
 textGraber.addEventListener('change', (event) => { 
         if (db !== undefined) {
         print.innerHTML = db(event.currentTarget.value);
+        } else {
+                print.innerHTML = 'create db first';
         }
 });
 
