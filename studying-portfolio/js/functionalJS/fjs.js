@@ -17,53 +17,43 @@ textGraber.addEventListener('change', (event) => {
 });
 
 function makeDB (text) {
-        const rawDataArray = text.split(/\r?\n/);
-        const uncommentedData = rawDataArray.filter( (item) => { return (item.length > 0 && item.charAt(0) != '#') } );
-        //const uData = uncommentedData.map(removeHash);
-        const tokenizedData = uncommentedData.map(tokenize);
-        const sortedData = tokenizedData.sort( (item1, item2) => { return item2.population - item1.population; } );
-        const bestTen = sortedData.slice(0, 10);
-        const dbItem = {};
-        const db = bestTen.reduce(makeDB,dbItem);
+        const db = text.split(/\r?\n/)
+        .filter( (item) => { return (item.length > 0 && item.charAt(0) != '#') } )
+        .map(tokenize)
+        .sort( (item1, item2) => { return item2.population - item1.population; } )
+        .slice(0, 10)
+        .reduce(makeDB,{});
         alert('A new DB was created'); 
-        return (string) => {
+        return textModification;
+        function tokenize(data) {
+                const items = data.split(',');
+                return {name: items[2], population: items[3]};
+        }
+        function makeDB(result, item, rateIndex) {
+                result[item.name] = {population: item.population, rate: rateIndex + 1};
+                return result;
+        }
+        function textModification (string) {
                 Object.keys(db).map( 
                         (city) => {
                                 string = string.replaceAll(city, `${city} (${db[city].rate} place in the TOP-10 of towns in the Ukraine, its population is ${db[city].population} ${db[city].population % 10 === 1 ? 'ludyna' : db[city].population % 10 < 5 && db[city].population % 10 > 0  ? 'ludyny' : 'ludey'})`)
                         });
                 return string;
         }
-        //}
-        function tokenize(data) {
-                const token = {};
-                const items = data.split(',');
-                token.name = items[2];
-                token.population = items[3];
-                return token;
-        }
-        function removeHash(item) {
-                return item = item.replace('#','');
-        }
-        function makeDB(result, item, rateIndex) {
-                let itemName = item.name;
-                let itemProperties = {population: item.population, rate: rateIndex + 1};
-                result[itemName] = itemProperties;
-                return result;
-        }
 }
+
 function makeTwoDB(text) {
-        const rawDataArray = text.split(/\r?\n/);
-        const uncommentedData = rawDataArray.filter( (item) => { return (item.length > 0 && item.charAt(0) != '#') } );
-        //const uData = uncommentedData.map(removeHash);
-        const tokenizedData = uncommentedData.map(tokenize);
-        const sortedData = tokenizedData.sort( (item1, item2) => { return item2.population - item1.population; } );
-        const bestTen = sortedData.slice(0, 10);
-        const dbItem = {};
-        const db = bestTen.reduce(makeDB,dbItem);
+        const db = text.split(/\r?\n/)
+        .filter( (item) => { return (item.length > 0 && item.charAt(0) != '#') } )
+        .map(tokenize)
+        .sort( (item1, item2) => { return item2.population - item1.population; } )
+        .slice(0, 10)
+        .reduce(makeDB,{});
         const db2w = Object.keys(db).reduce(make2wdb, {});
         console.log(db2w);
         alert('A new DB was created with more that one-word keys'); 
-        return (string) => {
+        return changeString;
+        function changeString (string) {
                 //if single-word city names only - it is faster and works quickly with a long db
                 const stringArray = string.split(' ');
                 console.log(stringArray);
@@ -75,37 +65,26 @@ function makeTwoDB(text) {
                                 : word;
                 });
                 let newString = newStringArray.join(' ');
-
-
-
+                // changing not-single-word
                 Object.keys(db2w).map( 
                         (city) => {
                                 newString = newString.replaceAll(city, `${city} (${db2w[city].rate} place [the sentence was created by searching a more-than-one-word key of the DB in the entered String], its population is ${db2w[city].population} ${db2w[city].population % 10 === 1 ? 'ludyna' : db2w[city].population % 10 < 5 && db2w[city].population % 10 > 0  ? 'ludyny' : 'ludey'})`)
                         });
                 return newString;
         }
+
         function make2wdb(result, key){
                 if (key.includes(' ')){
-                        let itemName = key;
-                        let itemProperties = {population: db[key].population, rate: db[key].rate};
-                        result[itemName] = itemProperties;
+                        result[key] = {population: db[key].population, rate: db[key].rate};
                 }
                 return result;
         }
         function tokenize(data) {
-                const token = {};
                 const items = data.split(',');
-                token.name = items[2];
-                token.population = items[3];
-                return token;
-        }
-        function removeHash(item) {
-                return item = item.replace('#','');
+                return {name: items[2], population: items[3]};
         }
         function makeDB(result, item, rateIndex) {
-                let itemName = item.name;
-                let itemProperties = {population: item.population, rate: rateIndex + 1};
-                result[itemName] = itemProperties;
+                result[item.name] = {population: item.population, rate: rateIndex + 1};
                 return result;
         }
 }
