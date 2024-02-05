@@ -4,7 +4,9 @@ let db;
 const print = document.querySelector('#print');
 dbGraber.addEventListener('change', (event) => {db = makeDB(event.currentTarget.value)});
 textGraber.addEventListener('change', (event) => { 
+        if (db !== undefined) {
         print.innerHTML = db(event.currentTarget.value);
+        }
 });
 
 function makeDB (text) {
